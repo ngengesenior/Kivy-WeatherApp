@@ -1,0 +1,273 @@
+#:import col kivy.utils.get_color_from_hex
+<ApixuBox>:
+    orientation:'vertical'
+    ScreenManagerWid:
+        size_hint_y:None
+        height:root.height * .85
+
+
+<ScreenManagerWid>:
+    CurrentWeather:
+        name:'current'
+
+
+
+<CurrentWeather>:
+    pressure:pressure
+    tmp_value:tmp_value
+    temperature:temperature
+    humidity:humidity
+    sunrise:sunrise
+    visibility:visibility
+    local_time:local_time
+    precipitation:precipitation
+    feels:feels
+    region:region
+    country:country
+    city:city
+    sky_state:sky_state
+    wind:wind
+    canvas:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+            source:'images/cloud.jpg'
+    ScrollView:
+        GridLayout:
+            size_hint_y:None
+            height:self.minimum_height
+            cols:1
+            BoxLayout:
+                size_hint_y:None
+                height:dp(30)
+            BoxLayout:
+                spacing:dp(5)
+                size_hint_y:None
+                height:dp(35)
+                orientation:'horizontal'
+                TextInput:
+                    hint_text:'City name...'
+                    size_hint_x:None
+                    width:self.parent.width * .75
+                    id:city
+                Button:
+                    text:'Search'
+                    on_press:root.getNowWeather(city.text)
+            BoxLayout:
+                size_hint_y:None
+                height:dp(90)
+                orientation:'vertical'
+                Label:
+                    id:temperature
+                    size_hint_x:None
+                    width:self.parent.width *.3
+                    text:'19' u'\u00b0'
+                    font_size:sp(30)
+                    markup:True
+                    bolder:True
+                Label:
+                    size_hint_x:None
+                    width:self.parent.width * .55
+                    id:sky_state
+                    text:'Cloudy and Rainy'
+                    font_size:sp(16)
+
+            Divider:
+            BoxLayout:
+                size_hint_y:None
+                height:tmp_lab.height + dp(12)
+                spacing:dp(10)
+                Lab:
+                    text:'Temperature'
+                    id:tmp_lab
+                    size_hint_y:None
+                    height:self.texture_size[1]
+                Lab:
+                    text:'Wind'
+                    size_hint_y:None
+                    height:tmp_lab.height
+                Lab:
+                    text:'Feels'
+                    size_hint_y:None
+                    height:tmp_lab.height
+                    Space:
+            Widget:
+                size_hint_y:None
+                height:dp(10)
+
+            BoxLayout:
+                size_hint_y:None
+                height:tmp_value.height + dp(12)
+                spacing:dp(10)
+                Lab:
+                    text:'19'+ u'\u00b0'+'C'
+                    id:tmp_value
+                    size_hint_y:None
+                    height:self.texture_size[1]
+                    valign:'center'
+                Lab:
+                    text:'7.6kph'
+                    id:wind
+                    size_hint_y:None
+                    height:tmp_value.height
+                    valign:'center'
+                Lab:
+                    id:feels
+                    text:'18'+ u'\u00b0' + 'C'
+                    size_hint_y:None
+                    height:tmp_value.height
+                    valign:'center'
+            Divider:
+
+            BoxLayout:
+                size_hint_y:None
+                height:hum_lab.height + dp(12)
+                spacing:dp(10)
+                Lab:
+                    text:'Humidity'
+                    id:hum_lab
+                    size_hint_y:None
+                    height:self.texture_size[1]
+                Lab:
+                    text:'Sun Rise'
+                    size_hint_y:None
+                    height:hum_lab.height
+                Lab:
+                    text:'Pressure'
+                    size_hint_y:None
+                    height:hum_lab.height
+            Widget:
+                size_hint_y:None
+                height:dp(10)
+            BoxLayout:
+                size_hint_y:None
+                height:hum_lab.height + dp(12)
+                spacing:dp(10)
+                Lab:
+                    text:'1000 %'
+                    id:humidity
+                    size_hint_y:None
+                    height:self.texture_size[1]
+                Lab:
+                    text:'06:17'
+                    size_hint_y:None
+                    height:hum_lab.height
+                    id:sunrise
+                Lab:
+                    text:'1000 Hpa'
+                    id:pressure
+                    size_hint_y:None
+                    height:hum_lab.height
+            Divider:
+            BoxLayout:
+                orientation:'vertical'
+                size_hint_y:None
+                height:dp(90)
+                Lab:
+
+                    text:'Precipitation'
+                    size_hint_y:None
+                    height:self.texture_size[1]
+                Lab:
+                    id:precipitation
+                    text:'0.0 in'
+                    markup:True
+                    bolder:True
+                    font_size:sp(25)
+                    color:col('#ff0000')
+                    size_hint_x:None
+                    width:self.parent.width * .8
+            Divider:
+            BoxLayout:
+                size_hint_y:None
+                height:dp(45)
+                orientation:'horizontal'
+                Lab:
+                    text:'Visibility'
+                Lab:
+                    id:visibility
+                    text:'12Km'
+            Divider:
+            Label:
+                text:'United Kingdom'
+                id:country
+                font_size:sp(20)
+                size_hint_y:None
+                height:self.texture_size[1]
+            Widget:
+                size_hint_y:None
+                height:dp(14)
+            Label:
+                size_hint_y:None
+                id:region
+                text:'United Kingdom,London City'
+            BoxLayout:
+                size_hint_y:None
+                height:dp(30)
+                Label:
+                    text:'Local Time'
+                    font_size:sp(12)
+
+                Label:
+                    id:local_time
+                    font_size:sp(12)
+                    text:'2017-08-12'
+
+
+
+<ForecastWeather>:
+    grid:grid
+    BoxLayout:
+        orientation:'vertical'
+        Button:
+            text:'Populate'
+            on_press:root.populate()
+            size_hint_y:None
+            height:dp(45)
+        ScrollView:
+            GridLayout:
+                cols:1
+                size_hint_y:self.minimum_height
+                id:grid
+
+<ConErrorPop>:
+    title:'Connection Error'
+    id:popup
+    size_hint_y:None
+    height:error_box.height
+    BoxLayout:
+        id:error_box
+        size_hint_y:None
+        height:dp(80)
+        orientation:'vertical'
+        Label:
+            text:'Check your internet connection'
+        Button:
+            text:'Dismiss'
+            on_press:popup.dismiss()
+
+
+
+
+
+<Space@Widget>:
+    size_hint_y:None
+    height:dp(10)
+<Lab@Label>:
+
+<Box@BoxLayout>
+    orientation:'vertical'
+    size_hint_y:None
+    height:dp(60)
+<Divider@BoxLayout>:
+    size_hint_y:None
+    height:dp(3)
+    canvas:
+        Color:
+            rgba:0,0,0,1
+        Rectangle:
+            size:self.size
+            pos:self.pos
+
+
+

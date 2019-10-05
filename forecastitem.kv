@@ -1,0 +1,51 @@
+<Item>:
+    orientation:'horizontal'
+    week_day:week_day
+    tmp:tmp
+    condition_img:condition_img
+    day_date:day_date
+    size_hint_y:None
+    height:dp(60)
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:'Monday'
+            font_size:sp(16)
+            id:day
+            height:self.texture_size[1] + dp(6)
+            id:week_day
+        Label:
+            text:'May, 18'
+            font_size:sp(16)
+            height:self.texture_size[1] + dp(6)
+            id:day_date
+        Space:
+        BoxLayout:
+            Label:
+                text:'Humidity,'
+            Label:
+                id:hum_text
+                text:'79%'
+        BoxLayout:
+            size_hint_y:None
+            height:dp(15)
+
+
+    Label:
+        text:'33'
+        font_size:sp(25)
+        id:tmp
+    Image:
+        source:'images/button.png'
+        id:condition_img
+
+<Space@Widget>:
+    size_hint_y:None
+    height:dp(2)
+    canvas:
+        Color:
+            rgba:1,1,1,1
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
